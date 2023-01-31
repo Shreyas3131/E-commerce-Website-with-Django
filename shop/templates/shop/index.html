@@ -62,7 +62,7 @@ body .no-padding:
 
   <!--Slideshow starts here -->
   {% for product, range, nSlides in allProds %}
-  <h1>Gaming Room Accessories</h1>
+  <h4 class="my-4">Flash Sale On {{product.0.category}} Recommended Items</h4>
   <div id="demo{{forloop.counter}}" class="carousel slide my-3" data-ride="carousel">
     <ul class="carousel-indicators">
       <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
