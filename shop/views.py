@@ -13,12 +13,18 @@ def index(request):
 
     allProds = []
     catprods = Product.objects.values('category', 'id')
+    # print("These are catprods",catprods)
     cats = {item['category'] for item in catprods}
+    # print("These are categories",cats)
     for cat in cats:
         prod = Product.objects.filter(category=cat)
+        # print("These are prods",prod)
         n = len(prod)
+        # print("Length of products",n)
         nSlides = n//4 + ceil((n/4) - (n//4))
+        # print("No of slides",nSlides)
         allProds.append([prod, range(1, nSlides), nSlides])
+        # print(allProds)
     # params = {"no_of_slides" : nSlides, "range" : range(1, nSlides), "product" : products}
     # allProds = [[products, range(1, nSlides), nSlides],
     #             [products, range(1, nSlides), nSlides]]
@@ -29,17 +35,20 @@ def about(request):
     return render(request, 'shop/about.html')
 
 def contact(request):
-    return HttpResponse("This is Contact Page")
+    return render(request, 'shop/contact.html')
 
 def tracker(request):
-    return HttpResponse("This is Tracker Page")
+    return render(request, 'shop/tracker.html')
 
 def search(request):
-    return HttpResponse("This is Search Page")
+    return render(request, 'shop/search.html')
 
-def productView(request):
-    return HttpResponse("This is Product View Page")
+def productView(request, myid):
+    # Fetch the product using the id
+    product = Product.objects.filter(id=myid)
+    print(product)
+    return render(request, 'shop/prodView.html', {'productView':product[0]})
 
 def checkout(request):
-    return HttpResponse("This is Checkout Page")
+    return render(request, 'shop/checkout.html')
 
