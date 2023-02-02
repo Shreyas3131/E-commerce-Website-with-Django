@@ -34,22 +34,11 @@
           .carousel-control-next{
           top: auto;
           bottom: auto;
-          padding-top: 200px;
+          padding-top: 222px;
           }
            body .no-padding{
            padding-left: 0,
            padding-right: 0;
-           }
-           .card{
-            width: 190px;
-           }
-           .card-body p{
-            line-height: 1.5em;
-            height: 2em;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            width: 100%;
            }
  {% endblock %}
 
@@ -76,13 +65,12 @@
       <div class="carousel-item active">
         {% for i in product %}
         <div class="col-xs-3 col-sm-3 col-md-3">
-          <div class="card w-110" style="width: 18rem;">
+          <div class="card" style="width: 18rem;">
             <img src='/media/{{i.image}}' class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{i.product_name}}</h5>
               <p class="card-text">{{i.desc}}</p>
               <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
-              <a href="/shop/productView/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart">Quick View</button></a>
             </div>
           </div>
         </div>
@@ -107,3 +95,38 @@
 </div>
  {% endblock %}
 
+{% block js %}
+<script>
+  console.log('working');
+  if(localStorage.getItem('cart') == null){
+  var cart = {};
+  }
+  else
+  {
+    {% comment %} if cart is existing load it we are loading here by below this{% endcomment %}
+  cart = JSON.parse(localStorage.getItem('cart'));
+  document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  }
+
+  {% comment %} Writing jQuery Below 
+  In jQuery there is Selector and function
+  {% endcomment %}
+
+  $('.cart').click(function(){
+  console.log('clicked');
+  var idstr = this.id.toString();
+  console.log(idstr);
+  if (cart[idstr] !=undefined){
+  cart[idstr] = cart[idstr] + 1;
+  }
+  else
+  {
+  cart[idstr] = 1;
+  }
+  console.log(cart);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  });
+  $('#popcart').popover('show')
+</script>
+{% endblock %}
