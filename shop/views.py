@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product
+from .models import Product, Contact
 from math import ceil
 
 # Create your views here.
@@ -35,6 +35,14 @@ def about(request):
     return render(request, 'shop/about.html')
 
 def contact(request):
+    if request.method=="POST":
+        sent_name = request.POST.get('name', 'default value')
+        sent_email = request.POST.get('email', 'default value')
+        sent_phone = request.POST.get('phone', 'default value')
+        sent_desc = request.POST.get('desc', 'default value')
+
+        contact = Contact(name=sent_name, email=sent_email, phone=sent_phone, desc=sent_desc)
+        contact.save()
     return render(request, 'shop/contact.html')
 
 def tracker(request):
