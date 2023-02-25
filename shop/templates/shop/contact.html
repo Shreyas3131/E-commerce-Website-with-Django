@@ -31,3 +31,12 @@
     </form>
 </div>
 {% endblock %}  
+
+{% block js %}
+<script>
+{% if submitted %}
+alert('Thanks for contacting with us.');
+localStorage.clear();
+{% endif%}
+</script>
+{% endblock %}  
